@@ -22,7 +22,7 @@ namespace cc
 
             for (size_t i = 0; i < thread_count_; ++i)
             {
-                threads_.emplace_back(std::thread(&ThreadPool::Worker, this));
+                threads_.emplace_back(std::thread(&ThreadPool::worker, this));
             }
         }
 
@@ -40,7 +40,7 @@ namespace cc
         }
 
         template <class F, class... Args>
-        auto Submit(F &&f, Args &&...args) -> std::future<std::invoke_result_t<F, Args...>>
+        auto submit(F &&f, Args &&...args) -> std::future<std::invoke_result_t<F, Args...>>
         {
             using return_type = std::invoke_result_t<F, Args...>;
 
@@ -61,7 +61,7 @@ namespace cc
         }
 
     private:
-        void Worker()
+        void worker()
         {
             while (true)
             {
