@@ -2,6 +2,7 @@
 #include <shared_mutex>
 #include <list>
 #include <cassert>
+#include <iostream>
 
 namespace cc
 {
@@ -104,6 +105,7 @@ namespace cc
 namespace cctest
 {
     using cc::ThreadSafeLookUpTable;
+
     static void TEST_thread_safe_lookup_table()
     {
         ThreadSafeLookUpTable<int, int> m;
@@ -120,6 +122,7 @@ namespace cctest
             m.remove_mapping(i);
             assert(m.value_for(i) == 0);
         }
+        std::cout << "====== Thread Safe Lookup Table Success ======" << std::endl;
         return;
     }
 } // namespace cctest
